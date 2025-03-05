@@ -9,7 +9,7 @@ export CUDA_VISIBLE_DEVICES=1 # Set the GPU(s) that you would like to use as vis
 export HF_ENDPOINT="https://hf-mirror.com" # For faster downloading from HuggingFace
 ```
 
-Then run the following lines for VLM and VLA training. These codes take "Qwen2-VL-7b" as example. (To use another VLM, main difference would lie in the loading of pre-trained model and processor)
+Then run the following lines for VLM and VLA training. These codes take "Qwen2-VL-7b" as example. To use another VLM, main difference would lie in the loading of pre-trained model and processor. 
 ```
 python train_vlm.py
 ```
@@ -18,9 +18,9 @@ or
 python train_vla.py
 ```
 
-For VLM training, the ChartQA dataset (cached at "/ssd/songjunru/.cache") is used for example. 
+For VLM training, the ChartQA dataset (cached at `"/ssd/songjunru/.cache"`) is used for example. 
 
-For VLA training, a small fraction of the "RT-1 Robot Action" dataset (from Open-X, cached at "/ssd/datasets/") is used for example. Note that this sample data has already been pre-processed into the following format: 
+For VLA training, a small fraction of the "RT-1 Robot Action" dataset (from Open-X, cached at `"/ssd/datasets/"`) is used for example. Note that this sample data has already been pre-processed into the following format: 
 ```
 {'episode_index': 0,
 'step_index': 0, # each episode within the original dataset consists of multiple steps
@@ -28,3 +28,12 @@ For VLA training, a small fraction of the "RT-1 Robot Action" dataset (from Open
 'image': <PIL.Image.Image image mode=RGB size=320x256 at 0x7F2D74B706E0>,
 'instruction': 'pick rxbar chocolate from bottom drawer and place on counter'}
 ```
+
+`prompts.py` contains system and user prompts. The system prompt for VLA is directly borrowed from OpenVLA (as shown below), which seems too simple and might need refinement. 
+```
+system_prompt_vla = "A chat between a curious user and an artificial intelligence assistant. \
+The assistant gives helpful, detailed, and polite answers to the user's questions."
+```
+`configs` contains configurations for quantization, PEFT (LoRA), and model training. 
+
+`utils_vlm` contains various utilities, including data formatter, data collator, action tokenizer, etc. 
